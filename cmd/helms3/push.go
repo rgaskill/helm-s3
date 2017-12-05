@@ -11,7 +11,6 @@ import (
 	"k8s.io/helm/pkg/provenance"
 
 	"github.com/hypnoglow/helm-s3/pkg/awss3"
-	"github.com/hypnoglow/helm-s3/pkg/awsutil"
 	"github.com/hypnoglow/helm-s3/pkg/helmutil"
 	"github.com/hypnoglow/helm-s3/pkg/index"
 )
@@ -29,12 +28,7 @@ func runPush(chartPath string, repoName string) error {
 		return errors.Wrapf(err, "change dir to %s", dir)
 	}
 
-	awsConfig, err := awsutil.Config()
-	if err != nil {
-		return errors.Wrap(err, "get aws config")
-	}
-
-	storage := awss3.NewStorage(awsConfig)
+	storage := awss3.NewStorage()
 
 	// Load chart and calculate required params like hash.
 

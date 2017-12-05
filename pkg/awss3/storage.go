@@ -15,15 +15,12 @@ import (
 )
 
 // NewStorage returns a new Storage.
-func NewStorage(awsConfig *aws.Config) *Storage {
-	return &Storage{
-		config: awsConfig,
-	}
+func NewStorage() *Storage {
+	return &Storage{}
 }
 
 // Storage provides an interface to work with AWS S3 objects by s3 protocol.
 type Storage struct {
-	config  *aws.Config
 	session *session.Session
 }
 
@@ -111,7 +108,7 @@ func (s *Storage) initSession() (err error) {
 		return nil
 	}
 
-	s.session, err = session.NewSession(s.config)
+	s.session, err = session.NewSession()
 	return errors.Wrap(err, "init aws session")
 }
 
